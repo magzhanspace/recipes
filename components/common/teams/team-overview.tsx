@@ -60,14 +60,13 @@ export default function TeamOverview() {
                      <p className="text-sm text-muted-foreground">No resources yet.</p>
                   )}
                   {pinnedDocuments.map((doc) => (
-                     <Link
+                     <div
                         key={doc.id}
-                        href={`/${orgId}/team/${team.id}/documents`}
                         className="flex items-center gap-2 py-1.5 px-2 -mx-2 rounded-md hover:bg-sidebar/50 text-sm"
                      >
                         <span className="text-base leading-none">{doc.icon}</span>
                         <span className="font-medium">{doc.name}</span>
-                     </Link>
+                     </div>
                   ))}
                </div>
             </div>

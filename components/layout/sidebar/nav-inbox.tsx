@@ -7,7 +7,6 @@ import {
    SidebarMenuButton,
    SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { forYouReviews } from '@/mock-data/reviews';
 import { inboxItems } from '@/mock-data/side-bar-nav';
 import { useNotificationsStore } from '@/store/notifications-store';
 import {
@@ -21,9 +20,7 @@ import { useEffect, useState } from 'react';
 
 const ITEM_KEYS: Record<string, SidebarItemKey> = {
    'Inbox': 'inbox',
-   'Reviews': 'reviews',
    'My issues': 'my-issues',
-   'Agent': 'agent',
 };
 
 export function NavInbox() {
@@ -35,13 +32,8 @@ export function NavInbox() {
    const unread = mounted ? getUnreadCount() : 0;
 
    const orderedItems = mounted
-      ? resolveOrder(
-           order.personal,
-           inboxItems.map((item) => ITEM_KEYS[item.name]).filter(Boolean)
-        )
-           .map((key) =>
-              inboxItems.find((item) => ITEM_KEYS[item.name] === key)
-           )
+      ? resolveOrder(order.personal, inboxItems.map((item) => ITEM_KEYS[item.name]).filter(Boolean))
+           .map((key) => inboxItems.find((item) => ITEM_KEYS[item.name] === key))
            .filter((item): item is (typeof inboxItems)[number] => Boolean(item))
       : inboxItems;
 
@@ -49,7 +41,7 @@ export function NavInbox() {
       if (!mounted) return true;
       const key = ITEM_KEYS[item.name];
       if (!key) return true;
-      const badge = key === 'inbox' ? unread : key === 'reviews' ? forYouReviews.length : 0;
+      const badge = key === 'inbox' ? unread : 0;
       return isSidebarItemVisible(visibility[key], badge);
    });
 

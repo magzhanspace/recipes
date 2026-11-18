@@ -4,16 +4,7 @@ import { persist } from 'zustand/middleware';
 export type SidebarVisibility = 'always' | 'badged' | 'never';
 export type SidebarBadgeStyle = 'count' | 'dot';
 
-export type SidebarItemKey =
-   | 'inbox'
-   | 'reviews'
-   | 'my-issues'
-   | 'agent'
-   | 'initiatives'
-   | 'projects'
-   | 'views'
-   | 'teams'
-   | 'members';
+export type SidebarItemKey = 'inbox' | 'my-issues' | 'projects' | 'views' | 'teams' | 'members';
 
 export type SidebarSection = 'personal' | 'workspace';
 
@@ -29,10 +20,7 @@ interface SidebarPrefsState {
 
 const DEFAULT_VISIBILITY: Record<SidebarItemKey, SidebarVisibility> = {
    'inbox': 'always',
-   'reviews': 'always',
    'my-issues': 'always',
-   'agent': 'always',
-   'initiatives': 'always',
    'projects': 'always',
    'views': 'always',
    'teams': 'always',
@@ -45,8 +33,8 @@ const DEFAULT_VISIBILITY: Record<SidebarItemKey, SidebarVisibility> = {
  * sidebar keeps its shape across sessions.
  */
 const DEFAULT_ORDER: Record<SidebarSection, SidebarItemKey[]> = {
-   personal: ['inbox', 'reviews', 'my-issues', 'agent'],
-   workspace: ['initiatives', 'projects', 'views', 'teams', 'members'],
+   personal: ['inbox', 'my-issues'],
+   workspace: ['projects', 'views', 'teams', 'members'],
 };
 
 export const useSidebarPrefsStore = create<SidebarPrefsState>()(

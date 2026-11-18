@@ -5,7 +5,6 @@ import {
    Bell,
    Box,
    ChevronRight,
-   Compass,
    CopyMinus,
    Home,
    Layers,
@@ -34,14 +33,11 @@ import {
    SidebarMenuSubButton,
    SidebarMenuSubItem,
 } from '@/components/ui/sidebar';
-import { StatusTriageIcon } from '@/mock-data/status';
 import { teams } from '@/mock-data/teams';
-import { useTriageStore } from '@/store/triage-store';
 import { RiDonutChartFill } from '@remixicon/react';
 
 export function NavTeams() {
    const joinedTeams = teams.filter((t) => t.joined);
-   const { items: triageQueue } = useTriageStore();
    return (
       <SidebarGroup>
          <SidebarGroupLabel>Your teams</SidebarGroupLabel>
@@ -112,22 +108,6 @@ export function NavTeams() {
                                  </Link>
                               </SidebarMenuSubButton>
                            </SidebarMenuSubItem>
-                           {triageQueue.some((entry) => entry.teamId === item.id) && (
-                              <SidebarMenuSubItem>
-                                 <SidebarMenuSubButton asChild>
-                                    <Link href={`/lndev-ui/team/${item.id}/triage`}>
-                                       <StatusTriageIcon color="#f2790f" />
-                                       <span>Triage</span>
-                                       <span className="ml-auto text-xs text-muted-foreground">
-                                          {
-                                             triageQueue.filter((entry) => entry.teamId === item.id)
-                                                .length
-                                          }
-                                       </span>
-                                    </Link>
-                                 </SidebarMenuSubButton>
-                              </SidebarMenuSubItem>
-                           )}
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
                                  <Link href={`/lndev-ui/team/${item.id}/all`}>
@@ -159,14 +139,6 @@ export function NavTeams() {
                                     </SidebarMenuSubButton>
                                  </SidebarMenuSubItem>
                               </SidebarMenuSub>
-                           </SidebarMenuSubItem>
-                           <SidebarMenuSubItem>
-                              <SidebarMenuSubButton asChild>
-                                 <Link href={`/lndev-ui/team/${item.id}/initiatives`}>
-                                    <Compass size={14} />
-                                    <span>Initiatives</span>
-                                 </Link>
-                              </SidebarMenuSubButton>
                            </SidebarMenuSubItem>
                            <SidebarMenuSubItem>
                               <SidebarMenuSubButton asChild>
