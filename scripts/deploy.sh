@@ -45,12 +45,27 @@ ssh "$HOST" "set -e
    rm -rf \$R; install -d -o magzhan -g magzhan \$R
    tar -xzf /tmp/recipes-$SHA.tgz -C \$R 2>/dev/null; rm /tmp/recipes-$SHA.tgz
    install -d \$R/.next/cache; chown -R magzhan:magzhan \$R
+   prev=\$(readlink $APP/current || true)
    ln -sfn \$R $APP/current.new && mv -Tf $APP/current.new $APP/current
    chown -h magzhan:magzhan $APP/current
    systemctl restart recipes.service
+   # Requests as Caddy sends them: the login page renders, and a signed-out
+   # page redirects to the public host (not to the server's own address).
+   ok=
    for i in 1 2 3 4 5 6 7 8 9 10; do
-      code=\$(curl -s -o /dev/null -w '%{http_code}' http://127.0.0.1:3120/login) && [ \"\$code\" = 200 ] && break; sleep 1
+      login=\$(curl -s -o /dev/null -w '%{http_code}' -H 'Host: recipes.magzhan.me' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3120/login)
+      gate=\$(curl -s -o /dev/null -w '%{http_code} %{redirect_url}' -H 'Host: recipes.magzhan.me' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3120/recipes)
+      if [ \"\$login\" = 200 ] && [ \"\$gate\" = '307 https://recipes.magzhan.me/login' ]; then ok=1; break; fi
+      sleep 1
    done
-   [ \"\$code\" = 200 ] || { echo 'recipes did not come up; run: scripts/deploy.sh rollback' >&2; exit 1; }
+   if [ -z \"\$ok\" ]; then
+      echo \"health check failed (login=\$login, /recipes=\$gate)\" >&2
+      if [ -n \"\$prev\" ]; then
+         ln -sfn \$prev $APP/current.new && mv -Tf $APP/current.new $APP/current
+         chown -h magzhan:magzhan $APP/current; systemctl restart recipes.service
+         echo \"rolled back to \$(basename \$prev)\" >&2
+      fi
+      exit 1
+   fi
    cd $APP/releases && ls -1t | tail -n +$((KEEP + 1)) | xargs -r rm -rf
    echo deployed $SHA"

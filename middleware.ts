@@ -12,11 +12,11 @@ export function middleware(request: NextRequest) {
    const hasSession = Boolean(request.cookies.get(SESSION_COOKIE)?.value);
    const { pathname } = request.nextUrl;
    if (pathname === '/login') {
-      return hasSession ? localRedirect('/recipes') : NextResponse.next();
+      return hasSession ? localRedirect(request, '/recipes') : NextResponse.next();
    }
    if (!hasSession) {
       if (pathname.startsWith('/media/')) return new NextResponse(null, { status: 401 });
-      return localRedirect('/login');
+      return localRedirect(request, '/login');
    }
    return NextResponse.next();
 }
