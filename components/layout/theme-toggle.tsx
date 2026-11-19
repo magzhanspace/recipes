@@ -15,14 +15,14 @@ import {
 import { DarkVariant, LightVariant, useThemeStore } from '@/store/theme-store';
 
 const LIGHT_VARIANTS: { id: LightVariant; label: string }[] = [
-   { id: 'pure-light', label: 'Pure Light' },
-   { id: 'light', label: 'Light' },
+   { id: 'pure-light', label: 'Белая' },
+   { id: 'light', label: 'Светлая' },
 ];
 
 const DARK_VARIANTS: { id: DarkVariant; label: string }[] = [
-   { id: 'dark', label: 'Dark' },
-   { id: 'magic-blue', label: 'Magic Blue' },
-   { id: 'classic-dark', label: 'Classic Dark' },
+   { id: 'dark', label: 'Тёмная' },
+   { id: 'magic-blue', label: 'Синяя' },
+   { id: 'classic-dark', label: 'Классическая тёмная' },
 ];
 
 /**
@@ -52,14 +52,14 @@ export function ThemeToggle() {
                ) : (
                   <Laptop className="h-4 w-4" />
                )}
-               <span className="sr-only">Toggle theme</span>
+               <span className="sr-only">Тема</span>
             </Button>
          </DropdownMenuTrigger>
          <DropdownMenuContent align="end" className="w-40">
             <DropdownMenuSub>
                <DropdownMenuSubTrigger>
                   <Sun className="mr-2 h-4 w-4" />
-                  <span className="flex-1">Light</span>
+                  <span className="flex-1">Светлая</span>
                   {mode === 'light' && <Check className="h-3.5 w-3.5" />}
                </DropdownMenuSubTrigger>
                <DropdownMenuSubContent className="w-40">
@@ -82,7 +82,7 @@ export function ThemeToggle() {
             <DropdownMenuSub>
                <DropdownMenuSubTrigger>
                   <Moon className="mr-2 h-4 w-4" />
-                  <span className="flex-1">Dark</span>
+                  <span className="flex-1">Тёмная</span>
                   {mode === 'dark' && <Check className="h-3.5 w-3.5" />}
                </DropdownMenuSubTrigger>
                <DropdownMenuSubContent className="w-40">
@@ -104,7 +104,7 @@ export function ThemeToggle() {
             </DropdownMenuSub>
             <DropdownMenuItem onClick={() => setMode('system')}>
                <Laptop className="mr-2 h-4 w-4" />
-               <span className="flex-1">System</span>
+               <span className="flex-1">Как в системе</span>
                {mode === 'system' && <Check className="h-3.5 w-3.5" />}
             </DropdownMenuItem>
          </DropdownMenuContent>

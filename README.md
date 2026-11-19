@@ -1,49 +1,38 @@
-# Circle
+# Рецепты
 
-<br />
-<a href="https://vercel.com/oss">
-  <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
-</a>
+Домашние рецепты, меню на неделю, список покупок и «что есть дома» для двоих.
+Данные и логика живут в [Mealie](https://github.com/mealie-recipes/mealie) на hermes,
+этот репозиторий — единственный интерфейс к нему. Устройство описано в
+[docs/architecture.md](docs/architecture.md).
 
-<br />
-<br />
+## Разработка
 
-Project management interface inspired by Linear. Built with Next.js and shadcn/ui, this application allows tracking of issues, projects and teams with a modern, responsive UI.
+Нужен туннель к Mealie и `.env.local` (в git не попадает):
 
-> The BaseUI code is available on [Square UI Pro](https://pro.lndevui.com/templates/circle-baseui).
-
-## 🛠️ Technologies
-
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Langage**: [TypeScript](https://www.typescriptlang.org/)
-- **UI Components**: [shadcn/ui](https://ui.shadcn.com/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-
-### 📦 Installation
-
-```shell
-git clone https://github.com/ln-dev7/circle.git
-cd circle
+```bash
+ssh -N -L 9926:127.0.0.1:9925 hermes
 ```
 
-### Install dependencies
-
-```shell
-pnpm install
+```text
+MEALIE_URL=http://127.0.0.1:9926
 ```
 
-### Start the development server
-
-```shell
-pnpm dev
+```bash
+npx -y pnpm@9 install
+npx -y pnpm@9 dev
 ```
 
-## Star History
+Вход — логином и паролем пользователя Mealie.
 
-<a href="https://www.star-history.com/#ln-dev7/circle&Date">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=ln-dev7/circle&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=ln-dev7/circle&type=Date" />
-   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=ln-dev7/circle&type=Date" />
- </picture>
-</a>
+Типы API генерируются из снимка `lib/mealie/openapi.json` (Mealie `v3.31.0`). После
+обновления Mealie:
+
+```bash
+ssh hermes 'curl -s http://127.0.0.1:9925/openapi.json' > lib/mealie/openapi.json
+npx -y pnpm@9 exec openapi-typescript lib/mealie/openapi.json -o lib/mealie/schema.d.ts
+```
+
+## Происхождение
+
+Интерфейс сделан на основе [ln-dev7/circle](https://github.com/ln-dev7/circle)
+(MIT, `b0ba7dd`), см. [LICENSE.md](LICENSE.md).
