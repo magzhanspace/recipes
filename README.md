@@ -5,6 +5,29 @@
 этот репозиторий — единственный интерфейс к нему. Устройство описано в
 [docs/architecture.md](docs/architecture.md).
 
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/recipes-dark.png">
+  <img alt="Список рецептов" src="docs/screenshots/recipes-light.png">
+</picture>
+
+## Как это выглядит
+
+Живой сайт: [recipes.magzhan.me](https://recipes.magzhan.me) (вход только для своих).
+
+| Рецепт                                                                                                                                                                           | Меню на неделю                                                                                                                                                                       |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/recipe-dark.jpg"><img alt="Страница рецепта" src="docs/screenshots/recipe-light.jpg"></picture>   | <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/plan-dark.png"><img alt="Меню на неделю" src="docs/screenshots/plan-light.png"></picture>             |
+| **Покупки**                                                                                                                                                                      | **Импорт по ссылке**                                                                                                                                                                 |
+| <picture><source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/shopping-dark.png"><img alt="Список покупок" src="docs/screenshots/shopping-light.png"></picture> | Кнопка «Добавить» на странице рецептов: вставляете ссылку на рецепт с любого сайта, Mealie разбирает ингредиенты и шаги. Если в рецепте есть свинина или алкоголь, сайт предупредит. |
+
+С телефона:
+
+<p>
+  <img alt="Рецепт на телефоне" src="docs/screenshots/recipe-dark-mobile.jpg" width="260">
+  <img alt="Меню на телефоне" src="docs/screenshots/plan-dark-mobile.png" width="260">
+  <img alt="Покупки на телефоне" src="docs/screenshots/shopping-dark-mobile.png" width="260">
+</p>
+
 ## Разработка
 
 Нужен туннель к Mealie и `.env.local` (в git не попадает):
